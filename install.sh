@@ -2,8 +2,12 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 files="bashrc Xresources vimrc powerline-shell.json"
 for i in $files; do
+  if [ -f "$HOME/.$i" ]; then
+    echo "backing up exising .$i"
+    mv "$HOME/.$i" "$DIR/$i.bak"
+  fi
   echo "linking $i"
-  ln -s "$HOME/.$i $DIR/$i"
+  ln -s "$DIR/$i" "$HOME/.$i"
 done
 
 echo "Font Setup"
@@ -30,7 +34,7 @@ cd ./dist && ./1-dist.sh && cd ..
 ./configure && make && sudo make install
 cd ..
 rm -rf ./hstr
-hh --show-configuration >> ~/.bashrc
+hh --show-configuration > ~/.hhrc
 
 echo "Vim Setup"
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim

@@ -5,10 +5,14 @@
 [[ $- != *i* ]] && return
 
 export LANG=en_US.utf8
-export NNTPSERVER="news.epita.fr"
-
-export EDITOR=vim
+# better yaourt colors
+if command -v yaourt 2>&1 > /dev/null; then
+  export YAOURT_COLORS="nb=1:pkg=1:ver=1;32:lver=1;45:installed=1;42:grp=1;34:od=1;41;5:votes=1;44:dsc=0:other=1;35"
+fi
+export VISUAL=vim
+export EDITOR="$VISUAL"
 export PAGER=less
+export TERM="xterm-256color"
 
 man() {
   LESS_TERMCAP_md=$'\e[01;31m' \
@@ -30,8 +34,15 @@ exitst()
   fi
 }
 
-PS1='\[\e[33m\e[1m\][\[\e[21m\e[0m\]\W\[\e[1m\e[33m\]] \[\e[21m\]$(exitst) \[\e[1m\]> \[\e[0m\]'
+#PS1='\[\e[33m\e[1m\][\[\e[21m\e[0m\]\W\[\e[1m\e[33m\]] \[\e[21m\]$(exitst) \[\e[1m\]> \[\e[0m\]'
 
+function _update_ps1() {
+  PS1=$(powerline-shell $?)
+}
+
+if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
+  PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
 shopt -s histappend
 
 ex ()
@@ -56,13 +67,12 @@ ex ()
   fi
 }
 
-# better yaourt colors
-export YAOURT_COLORS="nb=1:pkg=1:ver=1;32:lver=1;45:installed=1;42:grp=1;34:od=1;41;5:votes=1;44:dsc=0:other=1;35"
-export EDITOR="vim"
-alias gits="git status"
+alias ctrlc="xclip -selection c"
 alias gitl="git log --oneline --decorate --all"
-alias ll="ls -lh"
-alias la="ls -alh"
-alias xclip="xclip -selection c"
-alias ls='ls --color=auto'
+alias gits="git status"
 alias grep='grep --color=always'
+alias la="ls -alh"
+alias ll="ls -lh"
+alias ls='ls --color=auto'
+
+source ~/.hhrc
