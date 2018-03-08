@@ -1,0 +1,16 @@
+{
+  "segments": [
+    "username",
+    "hostname",
+    "ssh",
+    "cwd",
+    "hg",
+    "root"
+  ],
+  "hostname": {
+    "colorize": true
+  },
+  "cwd": {
+    "max_depth": 4
+  }
+}
