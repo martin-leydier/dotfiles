@@ -11,6 +11,6 @@
     "colorize": true
   },
   "cwd": {
-    "max_depth": 4
+    "mode":"dironly"
   }
 }
