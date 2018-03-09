@@ -1,0 +1,7 @@
+[user]
+	name = Martin Leydier
+	email = martin.leydier@gmail.com
+[push]
+	default = matching
+[pull]
+	rebase = true

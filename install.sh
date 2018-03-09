@@ -1,6 +1,6 @@
 #!/bin/sh
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-files="bashrc Xresources vimrc powerline-shell.json"
+files="bashrc Xresources vimrc powerline-shell.json gitconfig"
 for i in $files; do
   if [ -f "$HOME/.$i" ]; then
     echo "backing up exising .$i"
