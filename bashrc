@@ -76,3 +76,4 @@ alias ll="ls -lh"
 alias ls='ls --color=auto'
 
 source ~/.hhrc
+~/.updatecheck.sh &
