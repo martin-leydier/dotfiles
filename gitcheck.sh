@@ -1,6 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
-https_url="$(git remote get-url origin  | sed -e 's/:/\//g' | sed -e 's/git@/https:\/\//g')"
+remote_url="$(git remote get-url origin)"
+if [[ $remote_url == "git@*" ]]; then
+  https_url="$(echo -n $remote_url | sed -e 's/:/\//g' | sed -e 's/git@/https:\/\//g')"
+else
+  https_url="$remote_url"
+fi
 git fetch "$https_url" 2>/dev/null
 
 UPSTREAM=${1:-'@{u}'}

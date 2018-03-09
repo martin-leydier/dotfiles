@@ -4,6 +4,15 @@
 
 [[ $- != *i* ]] && return
 
+function _update_ps1() {
+  PS1=$(powerline-shell $?)
+}
+
+if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
+  PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
+shopt -s histappend
+
 export LANG=en_US.utf8
 # better yaourt colors
 if command -v yaourt 2>&1 > /dev/null; then
@@ -34,17 +43,6 @@ exitst()
   fi
 }
 
-#PS1='\[\e[33m\e[1m\][\[\e[21m\e[0m\]\W\[\e[1m\e[33m\]] \[\e[21m\]$(exitst) \[\e[1m\]> \[\e[0m\]'
-
-function _update_ps1() {
-  PS1=$(powerline-shell $?)
-}
-
-if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
-  PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-fi
-shopt -s histappend
-
 ex ()
 {
   if [ -f $1 ] ; then
@@ -52,7 +50,7 @@ ex ()
       *.tar.bz2)   tar xjf $1   ;;
       *.tar.gz)    tar xzf $1   ;;
       *.bz2)       bunzip2 $1   ;;
-      *.rar)       unrar x $1     ;;
+      *.rar)       unrar x $1   ;;
       *.gz)        gunzip $1    ;;
       *.tar)       tar xf $1    ;;
       *.tbz2)      tar xjf $1   ;;
