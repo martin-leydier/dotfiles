@@ -63,6 +63,9 @@ install() {
   chmod +x "$HOME/.updatecheck.sh"
   echo "Git startup check done" >&2
 
+  if command -v xrdb; then
+    xrdb ~/.Xresources
+  fi
 }
 install > "$DIR/install.log"
 echo "Install complete, remember to source ~/.bashrc, log is in $DIR/install.log"
