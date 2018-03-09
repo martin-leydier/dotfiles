@@ -4,6 +4,9 @@
 
 [[ $- != *i* ]] && return
 
+source ~/.hhrc
+~/.updatecheck.sh &
+
 function _update_ps1() {
   PS1=$(powerline-shell $?)
 }
@@ -73,7 +76,3 @@ alias grep='grep --color=always'
 alias la="ls -alh"
 alias ll="ls -lh"
 alias ls='ls --color=auto'
-
-
-source ~/.hhrc
-~/.updatecheck.sh &

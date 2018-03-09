@@ -1,19 +1,22 @@
 #!/bin/bash
 
-remote_url="$(git remote get-url origin)"
-if [ "${remote_url:0:4}" == "git@" ]; then
-  https_url="$(echo -n $remote_url | sed -e 's/:/\//g' | sed -e 's/git@/https:\/\//g')"
-else
-  https_url="$remote_url"
+if ! git ls-remote --exit-code https 2>&1 >/dev/null; then
+  remote_url="$(git remote get-url origin)"
+  if [ "${remote_url:0:4}" == "git@" ]; then
+    https_url="$(echo -n $remote_url | sed -e 's/:/\//g' | sed -e 's/git@/https:\/\//g')"
+  else
+    https_url="$remote_url"
+  fi
+  echo test
+  git remote add https "$https_url"
 fi
-git fetch "$https_url" 2>/dev/null
+git fetch https 2>/dev/null
 
-UPSTREAM=${1:-'@{u}'}
-LOCAL=$(git rev-parse @)
-REMOTE=$(git rev-parse "$UPSTREAM")
+LOCAL=$(git rev-parse master)
+REMOTE=$(git rev-parse "https/master")
 
 if [ $LOCAL != $REMOTE ]; then
-  echo "======================================================="
-  echo "Dotfiles are not in sync with remote, you should update"
-  echo "======================================================="
+  echo "===================================="
+  echo "Dotfiles are not in sync with remote"
+  echo "===================================="
 fi

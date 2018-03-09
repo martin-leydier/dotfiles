@@ -4,7 +4,7 @@
     "hostname",
     "ssh",
     "cwd",
-    "hg",
+    "exit_code",
     "root"
   ],
   "hostname": {
