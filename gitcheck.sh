@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 remote_url="$(git remote get-url origin)"
 if [ "${remote_url:0:4}" == "git@" ]; then
@@ -6,8 +6,6 @@ if [ "${remote_url:0:4}" == "git@" ]; then
 else
   https_url="$remote_url"
 fi
-echo "$https_url"
-exit
 git fetch "$https_url" 2>/dev/null
 
 UPSTREAM=${1:-'@{u}'}
