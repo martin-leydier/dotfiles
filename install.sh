@@ -37,8 +37,8 @@ install() {
   if command -v hstr; then
     echo "Hstr already exists, skipping..." >&2
   else
-    if command -v apt; then
-      sudo apt -y install libncursesw5-dev
+    if command -v apt-get; then
+      sudo apt-get -y install libncursesw5-dev
     else
       echo "apt not found, could not try to install libncursesw5-dev"
     fi
