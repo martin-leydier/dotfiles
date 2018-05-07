@@ -27,8 +27,8 @@ if [ -z $(type -t __ps1_powerline_code) ]; then
     prevback="$2"
     echo -en "$front$back $data"
   }
-  __ps1_powerline_hostfront=$(($(hostname | sum | cut -d ' ' -f 1) % 64 + 1))
-  __ps1_powerline_hostback=$(((16#$(hostname | md5sum | cut -d ' ' -f 1) + 64) % 256 + 1))
+  __ps1_powerline_hostfront=$( echo $(($(hostname | sum | cut -d ' ' -f 1) % 64 + 1)) | tr -d -)
+  __ps1_powerline_hostback=$( echo $(((16#$(hostname | md5sum | cut -d ' ' -f 1) + 64) % 256 + 1)) | tr -d -)
 fi
 
 function __ps1_powerline
@@ -51,7 +51,7 @@ function __ps1_powerline
   fi
 
   # potential $? segment & $ segment
-  if [ $retcode -ne 0 ]; then
+  if [ "$retcode" != '0' ]; then
     __ps1_powerline_sgement '15' '161' "$retcode"
     __ps1_powerline_sgement '15' '161' '$'
   else
