@@ -1,69 +1,63 @@
-function __ps1_powerline
-{
-  local retcode=$1
-  function code
+if [ -z $(type -t __ps1_powerline_code) ]; then
+  function __ps1_powerline_code
   {
     echo -en "\[\033[${1}m\]"
   }
-  function codefront
+  function __ps1_powerline_codefront
   {
-    echo -en "\[\033[3${1}m\]"
+    echo -en "\[\033[38;5;${1}m\]"
   }
-  function codeback
+  function __ps1_powerline_codeback
   {
-    echo -en "\[\033[4${1}m\]"
+    echo -en "\[\033[48;5;${1}m\]"
   }
-  function sep
+  function __ps1_powerline_sep
   {
     echo -en " $1${2}"
   }
-  local prevback=''
-  function segment
+  function __ps1_powerline_sgement
   {
-    local front=$(codefront $1)
-    local back=$(codeback $2)
-    local frontsep=$(codefront $prevback)
+    local front=$(__ps1_powerline_codefront $1)
+    local back=$(__ps1_powerline_codeback $2)
+    local frontsep=$(__ps1_powerline_codefront $prevback)
     local data=$3
     if [ -z $4 ]; then
-      echo -en "$(sep $back $frontsep)"
+      echo -en "$(__ps1_powerline_sep $back $frontsep)"
     fi
     prevback="$2"
     echo -en "$front$back $data"
   }
+  __ps1_powerline_hostfront=$(($(hostname | sum | cut -d ' ' -f 1) % 64 + 1))
+  __ps1_powerline_hostback=$(((16#$(hostname | md5sum | cut -d ' ' -f 1) + 64) % 256 + 1))
+fi
+
+function __ps1_powerline
+{
+  local retcode=$1
+
   # user segment
-  segment '8;5;250' '8;5;240' '\u' 'nosep'
+  __ps1_powerline_sgement '250' '240' '\u' 'nosep'
   # hostname segment
-  segment '8;5;220' '5;5;230' '\h'
+  __ps1_powerline_sgement "$__ps1_powerline_hostfront" "$__ps1_powerline_hostback" '\h'
 
   # potential SSH segment
-  function is_ssh
-  {
-    if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-      return 0
-    else
-      case $(ps -o comm= -p $PPID) in
-        sshd|*/sshd) return 0;;
-      esac
-    fi
-    return 1
-  }
-  if is_ssh; then
-    segment '8;5;254' '8;5;166' 'SSH'
+  if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    __ps1_powerline_sgement '254' '166' 'SSH'
   fi
-  if [ "$(pwd)" = "$HOME" ]; then
-    segment '8;5;15' '8;5;31' '\W'
+  if [ "$PWD" = "$HOME" ]; then
+    __ps1_powerline_sgement '15' '31' '\W'
   else
-    segment '8;5;254' '8;5;237' '\W'
+    __ps1_powerline_sgement '254' '237' '\W'
   fi
 
   # potential $? segment & $ segment
   if [ $retcode -ne 0 ]; then
-    segment '8;5;15' '8;5;161' "$retcode"
-    segment '8;5;15' '8;5;161' '$'
+    __ps1_powerline_sgement '15' '161' "$retcode"
+    __ps1_powerline_sgement '15' '161' '$'
   else
-    segment '8;5;15' '8;5;236' '$'
+    __ps1_powerline_sgement '15' '236' '$'
   fi
 
   # reset segment
-  echo -en "$(sep $(codefront $prevback) $(codeback '9'))$(code 0) "
+  echo -en "$(__ps1_powerline_sep $(__ps1_powerline_codefront $prevback) $(__ps1_powerline_code '49'))$(__ps1_powerline_code 0) "
 }

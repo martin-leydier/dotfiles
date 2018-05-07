@@ -5,10 +5,11 @@
 [[ $- != *i* ]] && return
 
 source ~/.hhrc
+source ~/.powerline-bash.sh
 ~/.updatecheck.sh &
 
 function _update_ps1() {
-  PS1=$(powerline-shell $?)
+  PS1=$(__ps1_powerline $?)
 }
 
 if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
