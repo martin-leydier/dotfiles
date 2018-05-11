@@ -26,7 +26,6 @@ export VISUAL=vim
 export EDITOR="$VISUAL"
 export PAGER=less
 export TERM="xterm-256color"
-export PATH="$HOME/.rbenv/bin:$PATH"
 
 man() {
   LESS_TERMCAP_md=$'\e[01;31m' \
@@ -77,3 +76,9 @@ alias grep='grep --color=always'
 alias la="ls -alh"
 alias ll="ls -lh"
 alias ls='ls --color=auto'
+
+
+source ~/.hhrc
+if [ -f ~/.bashrc_local ]; then
+  source ~/.bashrc_local
+fi
