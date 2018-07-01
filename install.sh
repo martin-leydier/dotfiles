@@ -30,7 +30,7 @@ install() {
     echo "Hstr already exists, skipping..." >&2
   else
     if command -v apt-get; then
-      sudo apt-get -y install libncursesw5-dev
+      sudo apt-get -y install libncursesw5-dev automake gcc pkg-config libreadline-dev
     else
       echo "apt not found, could not try to install libncursesw5-dev" >&2
     fi
