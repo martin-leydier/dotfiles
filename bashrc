@@ -78,7 +78,6 @@ alias ll="ls -lh"
 alias ls='ls --color=auto'
 
 
-source ~/.hhrc
 if [ -f ~/.bashrc_local ]; then
   source ~/.bashrc_local
 fi
