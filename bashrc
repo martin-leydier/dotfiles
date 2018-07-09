@@ -81,3 +81,6 @@ alias ls='ls --color=auto'
 if [ -f ~/.bashrc_local ]; then
   source ~/.bashrc_local
 fi
+if [ -f /etc/bash_completion ]; then
+  source /etc/bash_completion
+fi
