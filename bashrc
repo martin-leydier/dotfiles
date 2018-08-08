@@ -75,7 +75,7 @@ server()
 }
 
 alias ctrlc="xclip -selection c"
-alias gitl="git log --oneline --decorate --all --graph"
+alias gitl="git list"
 alias gits="git status"
 alias grep='grep --color=always'
 alias la="ls -alh"
