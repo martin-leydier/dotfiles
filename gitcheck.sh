@@ -7,7 +7,6 @@ if ! git ls-remote --exit-code https 2>&1 >/dev/null; then
   else
     https_url="$remote_url"
   fi
-  echo test
   git remote add https "$https_url"
 fi
 git fetch https 2>/dev/null

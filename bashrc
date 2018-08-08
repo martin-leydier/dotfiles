@@ -47,7 +47,7 @@ exitst()
   fi
 }
 
-ex ()
+ex()
 {
   if [ -f $1 ] ; then
     case $1 in
@@ -69,8 +69,13 @@ ex ()
   fi
 }
 
+server()
+{
+  python -m SimpleHTTPServer $1 || python3 -m http.server $1
+}
+
 alias ctrlc="xclip -selection c"
-alias gitl="git log --oneline --decorate --all"
+alias gitl="git log --oneline --decorate --all --graph"
 alias gits="git status"
 alias grep='grep --color=always'
 alias la="ls -alh"
