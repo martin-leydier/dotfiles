@@ -4,9 +4,8 @@
 
 [[ $- != *i* ]] && return
 
-source ~/.hhrc
 source ~/.powerline-bash.sh
-~/.updatecheck.sh &
+# ~/.updatecheck.sh &
 
 function _update_ps1() {
   PS1=$(__ps1_powerline $?)
@@ -26,6 +25,7 @@ export VISUAL=vim
 export EDITOR="$VISUAL"
 export PAGER=less
 export TERM="xterm-256color"
+export BAT_THEME="gruvbox (Dark) (Hard)"
 
 man() {
   LESS_TERMCAP_md=$'\e[01;31m' \
@@ -75,7 +75,7 @@ server()
 }
 
 alias ctrlc="xclip -selection c"
-alias gitl="git list"
+alias gitl='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --date=relative'
 alias gits="git status"
 alias grep='grep --color=always'
 alias la="ls -alh"
@@ -89,3 +89,5 @@ fi
 if [ -f /etc/bash_completion ]; then
   source /etc/bash_completion
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
