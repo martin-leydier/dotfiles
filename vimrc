@@ -10,6 +10,9 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'yggdroot/indentline'
+Plugin 'chr4/nginx.vim'
+Plugin 'ekalinin/Dockerfile.vim'
+Plugin 'avakhov/vim-yaml'
 call vundle#end()            " required
 filetype plugin indent on    " required
 colorscheme gruvbox
@@ -28,3 +31,5 @@ filetype plugin on
 syntax enable
 set term=screen-256color
 set t_ut=
+set modeline
+set modelines=5
