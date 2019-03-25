@@ -41,3 +41,16 @@ augroup Shebang
   autocmd BufNewFile *.rb 0put =\"#!/usr/bin/env ruby\<nl>\<nl>\"|$
   autocmd BufNewFile *.sh 0put =\"#!/bin/sh\<nl>\<nl>\"|$
 augroup END
+
+set pastetoggle=<F2>
+
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
